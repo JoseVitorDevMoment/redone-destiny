@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Sistema de Armazém</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+            }
+            .container {
+                max-width: 800px;
+                margin: auto;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            th,
+            td {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Sistema de Armazém</h1>
+            <button id="loginButton">Login</button>
+
+            <!-- Painel Admin -->
+            <div id="adminPanel" style="display: none">
+                <h2>Painel Administrativo</h2>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Pesquisar..."
+                />
+                <button onclick="addProduto()">Adicionar Produto</button>
+                <table id="productTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Formulário Adicionar Produto -->
+            <form id="productForm" style="display: none">
+                <h2>Cadastrar Produto</h2>
+                <input
+                    type="text"
+                    id="prodNome"
+                    placeholder="Nome do produto"
+                />
+                <textarea id="prodDesc" placeholder="Descrição"></textarea>
+                <input
+                    type="number"
+                    id="prodQuantidade"
+                    placeholder="Quantidade"
+                />
+                <button type="submit">Salvar</button>
+                <button onclick="cancelForm()">Cancelar</button>
+            </form>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
