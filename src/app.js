@@ -1,5 +1,7 @@
 let usuarios = [new Funcionario(1, "Admin", "Gerente")];
 
+document.getElementById("loginButton").addEventListener("click", login);
+
 function login() {
   document.getElementById("loginButton").style.display = "none";
   document.getElementById("adminPanel").style.display = "block";
@@ -45,9 +47,3 @@ function editProduct(id) {
 function deleteProduct(id) {
   // Implementar exclusão de produto
 }
-
-document.getElementById("loginButton").addEventListener("click", login);
-document.getElementById("productForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  saveProduct();
-});
