@@ -2,20 +2,25 @@ const db = new Sqlite.Database(":memory:"); // Banco em memória, altere conform
 
 db.serialize(() => {
   db.run(
-    "CREATE TABLE IF NOT EXISTS clientes (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, email TEXT)",
+    "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, senha TEXT)",
   );
-  db.run(
-    "CREATE TABLE IF NOT EXISTS fornecedores (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, contato TEXT)",
-  );
-  db.run(
-    "CREATE TABLE IF NOT EXISTS transportadoras (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, placa TEXT)",
-  );
-  db.run(
-    "CREATE TABLE IF NOT EXISTS produtos (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, descricao TEXT, quantidade INTEGER)",
-  );
-  db.run(
-    "CREATE TABLE IF NOT EXISTS funcionarios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, cargo TEXT)",
-  );
+
+  // Inserir usuário administrador
+  db.get("SELECT * FROM usuarios WHERE nome = 'admin'", [], (err, row) => {
+    if (!row) {
+      db.run(
+        "INSERT INTO usuarios (nome, senha) VALUES (?, ?)",
+        ["admin", "admin"],
+        function (err) {
+          if (err) {
+            console.error("Erro ao inserir usuário administrador:", err);
+          } else {
+            console.log("Usuário administrador adicionado com sucesso!");
+          }
+        },
+      );
+    }
+  });
 
   // Exemplo de inserção
   db.run(
