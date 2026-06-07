@@ -1,10 +1,44 @@
 let usuarios = [new Funcionario(1, "Admin", "Gerente")];
 
-document.getElementById("loginButton").addEventListener("click", login);
+document.getElementById("loginButton").addEventListener("click", () => {
+  document.getElementById("loginForm").style.display = "block";
+});
 
-function login() {
-  document.getElementById("loginButton").style.display = "none";
-  document.getElementById("adminPanel").style.display = "block";
+document.getElementById("loginForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  verifyLogin(username, password)
+    .then((isAdmin) => {
+      if (isAdmin) {
+        document.getElementById("loginButton").style.display = "none";
+        document.getElementById("adminPanel").style.display = "block";
+        document.getElementById("loginForm").reset();
+      } else {
+        alert("Usuário ou senha incorretos.");
+      }
+    })
+    .catch((err) => {
+      console.error("Erro ao verificar login:", err);
+      alert("Ocorreu um erro. Tente novamente mais tarde.");
+    });
+});
+
+async function verifyLogin(username, password) {
+  return new Promise((resolve, reject) => {
+    db.get(
+      "SELECT * FROM usuarios WHERE nome = ? AND senha = ?",
+      [username, password],
+      (err, row) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(row !== undefined);
+        }
+      },
+    );
+  });
 }
 
 function addProduto() {
